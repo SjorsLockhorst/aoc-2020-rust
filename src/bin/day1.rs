@@ -1,11 +1,7 @@
-use std::fs;
-use std::io;
+mod util;
 
 use advent_of_code::solve;
 
-pub fn load_input(day: u32, part: u32) -> io::Result<String> {
-    fs::read_to_string(format!("./inputs/day{}_{}.txt", day, part))
-}
 
 fn part_one(nums: &Vec<u32>) -> u32 {
     let mut solution: u32 = 0;
@@ -43,7 +39,7 @@ fn part_two(nums: &Vec<u32>) -> u32 {
 }
 
 fn main() {
-    let input = load_input(1, 1).unwrap();
+    let input = util::load_input(1).unwrap();
 
     let nums: Vec<u32> = input
         .split("\n")
