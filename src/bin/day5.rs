@@ -60,16 +60,30 @@ fn main() {
         })
         .collect();
 
-    let mut highest = 0;
+    let mut seat_ids: Vec<u32> = Vec::<u32>::new();
     for (row_bin_part, col_bin_part) in bin_partitioning {
         let row = bin_search(0, 127, &row_bin_part);
         let col = bin_search(0, 7, &col_bin_part);
         let seat_id = row * 8 + col;
-        if seat_id > highest {
-            highest = seat_id;
-        }
-
+        seat_ids.push(seat_id);
     }
+    seat_ids.sort();
+    let highest = seat_ids[seat_ids.len() - 1];
     print!("Part 1 solution: {highest}\n");
     assert_eq!(solve(2020, 5, 1, &input), Ok(highest.to_string()));
+
+    // Part 2
+    let mut i = 0;
+    let mut found = false;
+
+    while i < seat_ids.len() - 1 && !found {
+        if seat_ids[i + 1] - seat_ids[i] != 1 {
+            found = true;
+        }
+        i += 1;
+    }
+    let our_seat_id = seat_ids[i] - 1;
+    print!("Part two solution {}\n", our_seat_id);
+
+    assert_eq!(solve(2020, 5, 2, &input), Ok(our_seat_id.to_string()));
 }
